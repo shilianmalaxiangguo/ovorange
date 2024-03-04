@@ -90,7 +90,7 @@ function pipeline() {
     () => (tree) => {
       tree.children.forEach((node) => {
         if (node.type === "raw") {
-          node.value = `<div class="pagebody code component"><div class="component-content code"> ${node.value} </div></div>`
+          node.value = `<div class="pagebody code component"><div class="component-content code heti"> ${node.value} </div></div>`
           // node.value = node.value.replace(/astro-code/g, 'astro-code')
         }
       });

@@ -12,6 +12,8 @@
   --footer-pipe-color: #86868b;
   --footer-directory-title-color: #1d1d1f;
   --footer-directory-title-color-hover: #000;
+  --font-family-sans: 'Source Sans Pro', 'Roboto', 'Helvetica', 'Helvetica Neue', 'Source Han Sans SC', 'Source Han Sans TC', 'PingFang SC', 'PingFang HK', 'PingFang TC', sans-serif;
+  --font-family-serif: 'HiraMinProN-W6', 'Source Han Serif CN', 'Source Han Serif SC', 'Source Han Serif TC', serif;
 }
 
 
@@ -7220,9 +7222,13 @@ html.no-touch.no-reduced-motion .tile.tile-list[data-focus-method=key] .media--v
   background: #f8f9fa;
 }
 
+/**
+代码块css
+ */
 .code pre {
   overflow-x: auto;
-  border-radius: 8px;
+  font-size: 16px!important;
+  line-height: 1.5;
 }
 
 

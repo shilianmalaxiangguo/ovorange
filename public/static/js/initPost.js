@@ -117,7 +117,9 @@ function syntaxHighlight() {
   var styleDark = document.createElement("link");
   styleDark.rel = "stylesheet";
   // styleDark.href = "//cdn.staticfile.org/highlight.js/11.7.0/styles/stackoverflow-dark.min.css";
-  styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/atom-one-dark.min.css";
+  // styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/atom-one-dark.min.css";
+  // styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/monokai-sublime.min.css";
+  styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/base16/material.min.css";
 
   if (document.querySelector("body").classList.contains("theme-dark")) {
     document.head.appendChild(styleDark);
