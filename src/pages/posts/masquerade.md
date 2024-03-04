@@ -14,7 +14,7 @@ theme: 'light'
 featured: true
 ---
 
-![封面](/public/img/cc.jpg)[1]
+![封面](/img/cc.jpg)[1]
 
 
 Masquerade - Hitomi (黒石ひとみ)
