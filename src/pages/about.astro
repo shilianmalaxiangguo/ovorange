@@ -5,6 +5,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   img.rewardme {
     width: 200px;
 }
+  img.followme {
+    width: 400px;
+    border-radius: 8px;
+  }
 </style>
 <BaseLayout primaryTitle="关于">
   <section class="archive">
@@ -12,44 +16,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="archive-tag">
         <h2 class="tag-header">此博客</h2>
         <div class="tag-post-list">
-            <p>这个博客程序是我从 0 到 1 基于 astro 写的，售价 999 元一套，随缘更新且只卖有缘人。</p>
+            <p>只有美丽的富婆才能看出保安的逞强。</p>
         </div>
       </div>
 
-      <div class="archive-tag">
-        <h2 class="tag-header">我的作品</h2>
-        <div class="tag-post-list">
-          <ul>
-            <li>
-              <span>Chrome 插件</span>
-              <a href="https://foxai.me" target="_blank">FoxAI.me</a>
-            </li>
 
-            <li>
-              <span>Chrome 插件</span>
-              <a href="https://englishxyz.com" target="_blank">EnglishXYZ</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+
+
 
       <div class="archive-tag">
         <h2 class="tag-header">关注我</h2>
+        <p>速速与我击剑🤺</p>
         <div class="tag-post-list">
-          <ul>
-            <li>微信：no-sql </li>
-            <li>
-              <a href="https://twitter.com/austinit" target="_blank"> Twitter</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="archive-tag">
-        <h2 class="tag-header">赞赏我</h2>
-        <p>如果你觉得我的文章对你有益，或者我的作品还不错，👏🏻欢迎打赏。</p>
-        <div class="tag-post-list">
-          <img src="/rewardme.jpeg" class="rewardme" alt="赞赏码">
+          <img src="/img/wechatQr.jpg" class="followme" alt="微信码">
         </div>
       </div>
     </div>
