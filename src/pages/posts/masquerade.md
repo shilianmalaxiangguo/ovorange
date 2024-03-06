@@ -17,7 +17,7 @@ featured: true
 ![封面|wide](/img/cc.jpg)[1]
 
 
-Masquerade - Hitomi (黒石ひとみ)
+## Masquerade - Hitomi (黒石ひとみ)
 
 词：黒石ひとみ
 
