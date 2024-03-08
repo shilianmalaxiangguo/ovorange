@@ -9,6 +9,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     width: 400px;
     border-radius: 8px;
   }
+  /* 媒体查询，当屏幕宽度小于或等于600px时应用 */
+  @media (max-width: 600px) {
+    img.followme {
+      width: 300px; /* 在小屏幕上重置宽度 */
+    }
+  }
 </style>
 <BaseLayout primaryTitle="关于">
   <section class="archive">
