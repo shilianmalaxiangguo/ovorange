@@ -1,8 +1,8 @@
 ---
 layout: '../../layouts/MarkdownPost.astro'
-title: 'react(二)-forwardRef'
+title: 'react(二)-forwardRef&useContext'
 pubDate: 2024-03-18
-description: 'react(二)-forwardRef'
+description: 'react(二)-forwardRef&useContext'
 author: '保安'
 cover:
   url: '../img/cc.jpg'
@@ -89,3 +89,36 @@ export default App;
 有两个组件，一个是 Input，一个是 WrapperInput。Input 是内部组件，WrapperInput 是外部组件。
 useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值。
 在App里面定义了个useRef，wrapperInputRef -> wrapperInputRef组件 -> Input组件 -> useImperativeHandle里的传入的useRef实例 -> 绑定ref
+
+## useContext
+
+```typescript jsx
+import {createContext, useContext} from "react";
+
+const counterContext = createContext(99)
+
+function App() {
+    return <div>
+        <counterContext.Provider value={299}>
+            <Middle></Middle>
+        </counterContext.Provider>
+    </div>
+}
+
+function Middle () {
+    return <div>
+        <Child></Child>
+    </div>
+}
+function Child () {
+    const childCounter = useContext(counterContext)
+    return <p>当前context值:{childCounter}</p>
+}
+export default App
+
+```
+
+用 createContext 创建 context 对象，用 Provider 修改其中的值，
+function 组件使用 useContext 的 hook 来取值，class 组件使用 Consumer 来取值
+
+-

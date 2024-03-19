@@ -5,10 +5,10 @@ pubDate: "2024-03-19"
 description: "react(三)-useMemo&useCallback.md"
 author: '保安'
 cover:
-url: '../img/cc.jpg'
-square: '../img/cc.jpg'
-twitter: '../img/cc.jpg'
-alt: 'cover'
+  url: '../img/cc.jpg'
+  square: '../img/cc.jpg'
+  twitter: '../img/cc.jpg'
+  alt: 'cover'
 tags: [ "react" ]
 theme: 'dark'
 featured: true
@@ -55,3 +55,8 @@ export default App
 比如我想count等于10的倍数，不包含0。的时候缓存memo里的新返回。为什么不能用count % 10 === 0呢，因为20的时候返回true，21的时候返回false，那么deps发生改变，会触发deps再重新缓存一次。
 
 所以用Math.floor(count / 10)，就保证在20~29之间都是返回2，30~39之间都是返回3。值是在此区间是不变的。
+
+
+
+
+
