@@ -1,8 +1,8 @@
 ---
 layout: '../../layouts/MarkdownPost.astro'
-title: "react(三)-useMemo&useCallback.md"
+title: "react(三)-useMemo&useCallback"
 pubDate: "2024-03-19"
-description: "react(三)-useMemo&useCallback.md"
+description: "react(三)-useMemo&useCallback"
 author: '保安'
 cover:
   url: '../img/cc.jpg'
@@ -16,7 +16,7 @@ featured: true
 
 ![封面|wide](/img/cc.jpg)[1]
 
-## react(三)-useMemo&useCallback.md
+## react(三)-useMemo&useCallback
 
 ### useMemo
 
