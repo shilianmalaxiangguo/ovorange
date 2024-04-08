@@ -9,7 +9,7 @@ cover:
   square: '../img/cc.jpg'
   twitter: '../img/cc.jpg'
   alt: 'cover'
-tags: [ "react" ]
+tags: [ "React" ]
 theme: 'dark'
 featured: true
 ---
