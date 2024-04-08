@@ -2,14 +2,14 @@
 layout: '../../layouts/MarkdownPost.astro'
 title: 'Vue3-元组类型'
 pubDate: 2024-04-08
-description: 'masquerade'
+description: 'Vue3-元组类型'
 author: '保安'
 cover:
   url: '../img/cc.jpg'
   square: '../img/cc.jpg'
   twitter: '../img/cc.jpg'
   alt: 'cover'
-tags: ["vue", "TypeScript" ]
+tags: ["Vue", "TypeScript" ]
 theme: 'light'
 featured: true
 ---
