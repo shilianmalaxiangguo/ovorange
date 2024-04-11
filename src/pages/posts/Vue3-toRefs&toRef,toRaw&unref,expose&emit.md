@@ -51,6 +51,9 @@ console.log("age isRef", isRef(age)); // true
 const age = computed(() => personal.value.age)
 ```
 
+如果子组件需要一个基于props的可修改的相应式引用，那么可以用computed的`get`和`set`来共同实现。
+
+
 ### toRaw&unref
 
 toRaw并不是深拷贝，而会修改引用数据类型的值。
@@ -102,3 +105,51 @@ childRef.value.list // 属性
 emit用于发布订阅事件，子组件处理好某些事件之后，主动给父组件发消息，告诉子组件有新的派发。
 
 而expose是直接调用子组件的方法和属性，并没有订阅关系。
+
+emit可以结合.sync从子组件修改父组件传入进来的props，来达成双向数据绑定
+
+```vue
+<!--父组件-->
+<template>
+  <div>
+    <p>Parent Component: {{ parentValue }}</p>
+    <ChildComponent :childValue.sync="parentValue" />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import ChildComponent from './ChildComponent.vue';
+
+const parentValue = ref('Initial Value');
+</script>
+
+<!--子组件-->
+<template>
+  <div>
+    <p>Child Component: {{ childValue }}</p>
+    <button @click="updateValue">Update Parent Value</button>
+  </div>
+</template>
+
+<script setup>
+  import { defineProps, defineEmits } from 'vue';
+
+  const props = defineProps({
+    childValue: String
+  });
+  const emit = defineEmits(['update:value']);
+
+  const updateValue = () => {
+    emit('update:value', 'New Value');
+  };
+</script>
+```
+
+子组件通过`update:value`来直接把emit的值更新了，然后父组件通过`.sync修饰`符来完成数据双向绑定。
+`.sync`会自动将子组件更新的值传递给父组件，并更新父组件相应prop的值。
+
+
+### defineModel()
+
+`Vue3.4+`开始，推荐的实现方式是`defineModel()`。
