@@ -108,26 +108,76 @@ emit用于发布订阅事件，子组件处理好某些事件之后，主动给�
 
 emit可以结合.sync从子组件修改父组件传入进来的props，来达成双向数据绑定
 
+在vue2里有.sync，但是vue3里已经取消了.sync。
+
+
+
+子组件通过`update:value`来直接把emit的值更新了，然后父组件通过`.sync修饰`符来完成数据双向绑定。
+`.sync`会自动将子组件更新的值传递给父组件，并更新父组件相应prop的值。
+
+
 ```vue
 <!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+  import Child from './child.vue'
+
+  const count = ref(0)
+
+</script>
+
 <template>
-  <div>
-    <p>Parent Component: {{ parentValue }}</p>
-    <ChildComponent :childValue.sync="parentValue" />
-  </div>
+  <Child v-model:count="count"></Child>
 </template>
 
+<!--子组件-->
 <script setup>
-import { ref } from 'vue';
-import ChildComponent from './ChildComponent.vue';
-
-const parentValue = ref('Initial Value');
+  const props = defineProps({
+    count:{
+      type: Number,
+      default: () => 0
+    }
+  })
+  const emit = defineEmits(['update:count'])
+  function changeCount () {
+    const newCount = props.count + 1; // Increment the count
+    emit('update:count', newCount);   // Emit the updated count
+  }
 </script>
+<template>
+  <div>
+    {{ count }}
+  </div>
+  <button @click="changeCount">
+    changeCount
+  </button>
+</template>
+```
+
+现在这个写法是不能省略v-model:count，因为默认有个props就modelValue，如果是用这个名称的话，在父组件就可以省略。
+
+可以定义是默认的v-model。
+
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+  import Child from './Child.vue'
+  const parentValue = ref('Initial Value');
+
+</script>
+
+<template>
+  <div>
+    <Child v-model="parentValue"></Child>
+
+  </div>
+</template>
 
 <!--子组件-->
 <template>
   <div>
-    <p>Child Component: {{ childValue }}</p>
+    <p>Child Component: {{ modelValue }}</p>
     <button @click="updateValue">Update Parent Value</button>
   </div>
 </template>
@@ -136,20 +186,108 @@ const parentValue = ref('Initial Value');
   import { defineProps, defineEmits } from 'vue';
 
   const props = defineProps({
-    childValue: String
+    modelValue:{
+      type: String,
+      default: ''
+    }
   });
-  const emit = defineEmits(['update:value']);
+  const emit = defineEmits(['update:modelValue']);
 
   const updateValue = () => {
-    emit('update:value', 'New Value');
+    emit('update:modelValue', 'New Value');
   };
 </script>
 ```
 
-子组件通过`update:value`来直接把emit的值更新了，然后父组件通过`.sync修饰`符来完成数据双向绑定。
-`.sync`会自动将子组件更新的值传递给父组件，并更新父组件相应prop的值。
+如果想绑定多个v-model，那么除了默认的modelValue之外，其他的正常写就行
 
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+  import Child from './Child.vue'
+  const parentValue = ref('Initial Value');
+  const count = ref(0)
+</script>
 
+<template>
+  <div>
+    <Child v-model="parentValue" v-model:count="count"></Child>
+
+  </div>
+</template>
+
+<!--子组件-->
+<template>
+  <div>
+    <p>Child Component: {{ modelValue }}</p>
+    <button @click="updateValue">Update Parent Value</button>
+    <p>count: {{ count}}</p>
+    <button @click="updateCount">Update Count Value</button>
+
+  </div>
+</template>
+
+<script setup>
+  import { defineProps, defineEmits } from 'vue';
+
+  const props = defineProps({
+    modelValue:{
+      type: String,
+      default: ''
+    },
+    count:{
+      type: Number,
+      default: 0
+    }
+  });
+  const emit = defineEmits(['update:modelValue','update:count']);
+
+  const updateValue = () => {
+    emit('update:modelValue', 'New Value');
+  };
+  const updateCount = () => {
+    emit('update:count',props.count + 1)
+  }
+</script>
+```
 ### defineModel()
 
 `Vue3.4+`开始，推荐的实现方式是`defineModel()`。
+
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+
+  import Comp from './Comp.vue'
+  const count = ref(null)
+
+
+</script>
+
+<template>
+  <Comp v-model="count"></Comp>
+  <div>father count :{{ count}}</div>
+</template>
+<!--子组件-->
+<script setup>
+
+  const value = defineModel({
+    type: Number,
+    default: 0
+  })
+
+  function handleValue () {
+    value.value += 1
+  }
+</script>
+
+<template>
+  <div>
+    <div>value:{{ value }}</div>
+    <button @click="handleValue"> update </button>
+  </div>
+</template>
+
+```
