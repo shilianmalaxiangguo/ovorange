@@ -291,3 +291,19 @@ emit可以结合.sync从子组件修改父组件传入进来的props，来达成
 </template>
 
 ```
+
+defineModel其实是一个语法糖
+```vue
+<script setup>
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <input
+    :value="props.modelValue"
+    @input="emit('update:modelValue', $event.target.value)"
+  />
+</template>
+```
+
