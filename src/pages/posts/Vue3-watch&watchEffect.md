@@ -69,4 +69,48 @@ export function useFetch(url) {
 }
 ```
 
-(未更完)
+### watch的三个参数
+
+```javascript
+watch(id, async (newId, oldId, onCleanup) => {
+const { response, cancel } = doAsyncWork(newId)
+// 当 `id` 变化时，`cancel` 将被调用，
+// 取消之前的未完成的请求
+onCleanup(cancel)
+data.value = await response
+})
+```
+
+### watch的返回值
+```javascript
+const stop = watch(source, callback)
+
+// 当已不再需要该侦听器时：
+stop()
+```
+
+
+### watchEffect的参数
+
+```javascript
+watchEffect(async (onCleanup) => {
+  const { response, cancel } = doAsyncWork(id.value)
+  // `cancel` 会在 `id` 更改时调用
+  // 以便取消之前
+  // 未完成的请求
+  onCleanup(cancel)
+  data.value = await response
+})
+```
+
+onCleanUp是在副作用重新执行之前，调用的清理函数。执行例如定时器，清空状态之类的。
+
+### flush参数
+决定了副作用函数的执行时机
+- pre
+  - 默认，副作用函数会在DOM更新前执行
+- post
+  - 副作用函数会在DOM更新后执行
+- sync
+  - 副作用函数会同步进行，即响应依赖变更的瞬间执行。通常是需要立即响应变化作出相应动作的场景。
+  - 对性能要求极高，如果存在多个数据同时更新，会出现数据一致性的问题。
