@@ -51,6 +51,9 @@ console.log("age isRef", isRef(age)); // true
 const age = computed(() => personal.value.age)
 ```
 
+如果子组件需要一个基于props的可修改的相应式引用，那么可以用computed的`get`和`set`来共同实现。
+
+
 ### toRaw&unref
 
 toRaw并不是深拷贝，而会修改引用数据类型的值。
@@ -102,3 +105,219 @@ childRef.value.list // 属性
 emit用于发布订阅事件，子组件处理好某些事件之后，主动给父组件发消息，告诉子组件有新的派发。
 
 而expose是直接调用子组件的方法和属性，并没有订阅关系。
+
+emit可以结合.sync从子组件修改父组件传入进来的props，来达成双向数据绑定
+
+在vue2里有.sync，但是vue3里已经取消了.sync。
+
+
+
+子组件通过`update:value`来直接把emit的值更新了，然后父组件通过`.sync修饰`符来完成数据双向绑定。
+`.sync`会自动将子组件更新的值传递给父组件，并更新父组件相应prop的值。
+
+
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+  import Child from './child.vue'
+
+  const count = ref(0)
+
+</script>
+
+<template>
+  <Child v-model:count="count"></Child>
+</template>
+
+<!--子组件-->
+<script setup>
+  const props = defineProps({
+    count:{
+      type: Number,
+      default: () => 0
+    }
+  })
+  const emit = defineEmits(['update:count'])
+  function changeCount () {
+    const newCount = props.count + 1; // Increment the count
+    emit('update:count', newCount);   // Emit the updated count
+  }
+</script>
+<template>
+  <div>
+    {{ count }}
+  </div>
+  <button @click="changeCount">
+    changeCount
+  </button>
+</template>
+```
+
+现在这个写法是不能省略v-model:count，因为默认有个props就modelValue，如果是用这个名称的话，在父组件就可以省略。
+
+可以定义是默认的v-model。
+
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+  import Child from './Child.vue'
+  const parentValue = ref('Initial Value');
+
+</script>
+
+<template>
+  <div>
+    <Child v-model="parentValue"></Child>
+
+  </div>
+</template>
+
+<!--子组件-->
+<template>
+  <div>
+    <p>Child Component: {{ modelValue }}</p>
+    <button @click="updateValue">Update Parent Value</button>
+  </div>
+</template>
+
+<script setup>
+  import { defineProps, defineEmits } from 'vue';
+
+  const props = defineProps({
+    modelValue:{
+      type: String,
+      default: ''
+    }
+  });
+  const emit = defineEmits(['update:modelValue']);
+
+  const updateValue = () => {
+    emit('update:modelValue', 'New Value');
+  };
+</script>
+```
+
+如果想绑定多个v-model，那么除了默认的modelValue之外，其他的正常写就行
+
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+  import Child from './Child.vue'
+  const parentValue = ref('Initial Value');
+  const count = ref(0)
+</script>
+
+<template>
+  <div>
+    <Child v-model="parentValue" v-model:count="count"></Child>
+
+  </div>
+</template>
+
+<!--子组件-->
+<template>
+  <div>
+    <p>Child Component: {{ modelValue }}</p>
+    <button @click="updateValue">Update Parent Value</button>
+    <p>count: {{ count}}</p>
+    <button @click="updateCount">Update Count Value</button>
+
+  </div>
+</template>
+
+<script setup>
+  import { defineProps, defineEmits } from 'vue';
+
+  const props = defineProps({
+    modelValue:{
+      type: String,
+      default: ''
+    },
+    count:{
+      type: Number,
+      default: 0
+    }
+  });
+  const emit = defineEmits(['update:modelValue','update:count']);
+
+  const updateValue = () => {
+    emit('update:modelValue', 'New Value');
+  };
+  const updateCount = () => {
+    emit('update:count',props.count + 1)
+  }
+</script>
+```
+### defineModel()
+
+`Vue3.4+`开始，推荐的实现方式是`defineModel()`。
+
+```vue
+<!--父组件-->
+<script setup>
+  import { ref } from 'vue'
+
+  import Comp from './Comp.vue'
+  const count = ref(null)
+
+
+</script>
+
+<template>
+  <Comp v-model="count"></Comp>
+  <div>father count :{{ count}}</div>
+</template>
+<!--子组件-->
+<script setup>
+
+  const value = defineModel({
+    type: Number,
+    default: 0
+  })
+
+  function handleValue () {
+    value.value += 1
+  }
+</script>
+
+<template>
+  <div>
+    <div>value:{{ value }}</div>
+    <button @click="handleValue"> update </button>
+  </div>
+</template>
+
+```
+
+defineModel其实是一个语法糖
+```vue
+<script setup>
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <input
+    :value="props.modelValue"
+    @input="emit('update:modelValue', $event.target.value)"
+  />
+</template>
+```
+
+### toValue & unref
+
+toValue可以接受
+- 一个普通值
+- 一个Ref对象
+- 一个有返回值的函数
+
+如果是一个函数，则会执行一次这个函数，并使用其返回值。
+
+unref
+- 处理Ref对象
+- 如果不是Ref类型，则返回传入值
+
+尽可能用toValue替代unref，这不会有任何的问题。
