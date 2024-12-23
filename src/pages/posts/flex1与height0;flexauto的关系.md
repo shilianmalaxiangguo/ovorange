@@ -25,7 +25,8 @@ featured: true
 [实现地址](https://my-vue3-demo.pages.dev/tab-dialog)
 
 html部分
-```vue
+
+```html
 <template>
   <div>
     <el-button type="primary" @click="dialogVisible = true">打开 Tab Dialog</el-button>
@@ -76,8 +77,8 @@ html部分
 </template>
 ```
 css部分
-```vue
-<style lang="scss" >
+
+```scss
 .root {
     /**
     这里不能用 flex: 1 替换的原因是：
@@ -91,9 +92,7 @@ css部分
   flex-direction: column-reverse;
   border: 1px solid rgb(30, 255, 0);
 }
-</style>
 
-<style lang="scss">
 .tab-dialog {
   .el-dialog__body {
     display: flex !important;
@@ -114,5 +113,20 @@ css部分
 当元素只需要简单地填充剩余空间时，使用 flex: 1 更合适
 这就是为什么在 .root 中使用 flex: auto + height: 0，而在 .tab-dialog 中使用 flex: 1 的原因  
 */
-</style>
 ```
+
+## 关键点
+
+### 关键点1
+`flex: auto + height: 0` 其实另外的写法也可以是 `flex: 1 + flex-basis: 0`
+
+然后某种情况也可以是`flex: 1`
+
+当在某个元素之内当子元素，比如el-tabs里，那么这个元素的`flex: 1` 会失效，需要使用`flex: auto + height: 0` 来实现
+
+自己本身就是父级，那么`flex: 1` 会生效，`flex: auto + height: 0` 也会生效
+
+### 关键点2
+优先使用`height: 0;flex: auto; `而不是`flex: 1;basis: 0;`
+
+因为语句更好理解，`flex: 1;basis: 0;` 语句更难理解
