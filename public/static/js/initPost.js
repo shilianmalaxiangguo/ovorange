@@ -1,4 +1,3 @@
-
 // console.log("postInit.js loaded");
 var scriptMd5 = document.createElement("script");
 scriptMd5.src = "/static/js/md5.js";
@@ -105,21 +104,16 @@ function renderStyle(sign, percent) {
 
 function syntaxHighlight() {
   var script = document.createElement("script");
-  // script.src = "//cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js";
-  script.src = "//cdn.staticfile.net/highlight.js/11.9.0/highlight.min.js";
+  script.src = "/static/js/hljs.js";
   document.head.appendChild(script);
 
   var styleLight = document.createElement("link");
   styleLight.rel = "stylesheet";
-  // styleLight.href = "//cdn.staticfile.org/highlight.js/11.7.0/styles/stackoverflow-light.min.css";
-  styleLight.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/atom-one-light.min.css";
+  styleLight.href = "/static/css/stackoverflow-light.min.css";
 
   var styleDark = document.createElement("link");
   styleDark.rel = "stylesheet";
-  // styleDark.href = "//cdn.staticfile.org/highlight.js/11.7.0/styles/stackoverflow-dark.min.css";
-  // styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/atom-one-dark.min.css";
-  // styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/monokai-sublime.min.css";
-  styleDark.href = "//cdn.staticfile.net/highlight.js/11.9.0/styles/base16/material.min.css";
+  styleDark.href = "/static/css/stackoverflow-dark.min.css";
 
   if (document.querySelector("body").classList.contains("theme-dark")) {
     document.head.appendChild(styleDark);
@@ -128,8 +122,6 @@ function syntaxHighlight() {
   }
 
   script.onload = function () {
-    // console.log("hljs.js loaded");
-    // 忽略未转义的HTML警告，自己的md文档默认可信
     hljs.configure({
       ignoreUnescapedHTML: true
     });

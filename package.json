@@ -10,8 +10,8 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/rss": "^4.0.5",
-		"astro": "^4.4.9",
+		"@astrojs/rss": "^4.0.10",
+		"astro": "^4.16.18",
 		"md5": "^2.3.0",
 		"rehype": "^12.0.1",
 		"unist-util-visit": "^4.1.2"

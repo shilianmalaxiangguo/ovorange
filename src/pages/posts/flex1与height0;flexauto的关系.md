@@ -26,7 +26,7 @@ featured: true
 
 html部分
 
-```vue
+```java
 <template>
   <div>
     <el-button type="primary" @click="dialogVisible = true">打开 Tab Dialog</el-button>
