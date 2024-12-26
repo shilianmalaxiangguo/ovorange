@@ -26,7 +26,7 @@ featured: true
 
 html部分
 
-```html
+```vue
 <template>
   <div>
     <el-button type="primary" @click="dialogVisible = true">打开 Tab Dialog</el-button>
@@ -78,7 +78,7 @@ html部分
 ```
 css部分
 
-```scss
+```css
 .root {
     /**
     这里不能用 flex: 1 替换的原因是：
