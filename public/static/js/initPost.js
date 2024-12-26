@@ -104,7 +104,7 @@ function renderStyle(sign, percent) {
 
 function syntaxHighlight() {
   var script = document.createElement("script");
-  script.src = "/static/js/hightlight.min.js";
+  script.src = "/static/js/highlight.min.js";
   document.head.appendChild(script);
 
   var styleLight = document.createElement("link");
