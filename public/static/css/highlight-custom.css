@@ -1,0 +1,49 @@
+/* 基础代码块样式 */
+pre,
+pre code,
+pre code.hljs {
+  /* 代码字体优先使用等宽字体，中文使用与全局一致的字体 */
+  font-family:Menlo,Monaco,Consolas,Courier New,monospace!important;
+  /* font-weight: bold !important; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 代码块内所有元素 */
+pre code.hljs *,
+.hljs * {
+  font-family: inherit !important;
+  font-weight: inherit !important;
+}
+
+/* 高亮元素 */
+.hljs-keyword,
+.hljs-string,
+.hljs-number,
+.hljs-built_in,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-title,
+.hljs-tag,
+.hljs-name,
+.hljs-attr,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-variable {
+  font-family: inherit !important;
+  /* font-weight: bold !important; */
+}
+
+/* 注释样式 */
+.hljs-comment {
+  font-family: inherit !important;
+  font-weight: normal !important;
+}
+
+/* 强制覆盖任何其他样式 */
+[class*="hljs-"] {
+  font-family: inherit !important;
+} 

@@ -105,28 +105,48 @@ function renderStyle(sign, percent) {
 function syntaxHighlight() {
   var script = document.createElement("script");
   script.src = "/static/js/highlight.min.js";
+
+  // 创建一个 Promise 来处理样式加载
+  const loadStyles = new Promise((resolve) => {
+    var styleLight = document.createElement("link");
+    styleLight.rel = "stylesheet";
+    styleLight.href = "/static/css/stackoverflow-light.min.css";
+
+    var styleDark = document.createElement("link");
+    styleDark.rel = "stylesheet";
+    styleDark.href = "/static/css/stackoverflow-dark.min.css";
+
+    // 添加自定义样式
+    var styleCustom = document.createElement("link");
+    styleCustom.rel = "stylesheet";
+    styleCustom.href = "/static/css/highlight-custom.css";
+
+    // 确保自定义样式最后加载
+    styleCustom.onload = resolve;
+
+    if (document.querySelector("body").classList.contains("theme-dark")) {
+      document.head.appendChild(styleDark);
+    } else {
+      document.head.appendChild(styleLight);
+    }
+    
+    // 最后加载自定义样式
+    setTimeout(() => document.head.appendChild(styleCustom), 100);
+  });
+
+  // 先加载脚本
   document.head.appendChild(script);
 
-  var styleLight = document.createElement("link");
-  styleLight.rel = "stylesheet";
-  styleLight.href = "/static/css/stackoverflow-light.min.css";
-
-  var styleDark = document.createElement("link");
-  styleDark.rel = "stylesheet";
-  styleDark.href = "/static/css/stackoverflow-dark.min.css";
-
-  if (document.querySelector("body").classList.contains("theme-dark")) {
-    document.head.appendChild(styleDark);
-  } else {
-    document.head.appendChild(styleLight);
-  }
-
-  script.onload = function () {
+  // 等待所有资源加载完成
+  Promise.all([
+    new Promise(resolve => script.onload = resolve),
+    loadStyles
+  ]).then(() => {
     hljs.configure({
       ignoreUnescapedHTML: true
     });
     document.querySelectorAll('pre code').forEach((el) => {
       hljs.highlightElement(el);
     });
-  };
+  });
 }

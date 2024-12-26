@@ -67,7 +67,12 @@ caption,
 th,
 figcaption {
   font-size: .875em;
-  font-family: SF Mono, monaco, -apple-system, roboto mono, monospace;
+  /* font-family: SF Mono, monaco, -apple-system, roboto mono, monospace; */
+    /* 代码字体优先使用等宽字体，中文使用与全局一致的字体 */
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace !important;
+  /* font-weight: bold !important; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-weight: normal;
   font-style: normal
 }
