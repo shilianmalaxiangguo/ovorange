@@ -110,11 +110,11 @@ function syntaxHighlight() {
   const loadStyles = new Promise((resolve) => {
     var styleLight = document.createElement("link");
     styleLight.rel = "stylesheet";
-    styleLight.href = "/static/css/stackoverflow-light.min.css";
+    styleLight.href = "/static/css/vs.min.css";
 
     var styleDark = document.createElement("link");
     styleDark.rel = "stylesheet";
-    styleDark.href = "/static/css/stackoverflow-dark.min.css";
+    styleDark.href = "/static/css/material.min.css";
 
     // 添加自定义样式
     var styleCustom = document.createElement("link");

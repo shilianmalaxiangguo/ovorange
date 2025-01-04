@@ -13,7 +13,6 @@ pre code.hljs {
 pre code.hljs *,
 .hljs * {
   font-family: inherit !important;
-  font-weight: inherit !important;
 }
 
 /* 高亮元素 */
@@ -34,16 +33,21 @@ pre code.hljs *,
 .hljs-selector-class,
 .hljs-variable {
   font-family: inherit !important;
-  /* font-weight: bold !important; */
 }
 
 /* 注释样式 */
 .hljs-comment {
   font-family: inherit !important;
-  font-weight: normal !important;
 }
 
 /* 强制覆盖任何其他样式 */
 [class*="hljs-"] {
   font-family: inherit !important;
+}
+
+/* 只修改亮色主题的背景色 */
+body:not(.theme-dark) pre,
+body:not(.theme-dark) pre code,
+body:not(.theme-dark) pre code.hljs {
+  background: #FAFAFA !important;
 } 
