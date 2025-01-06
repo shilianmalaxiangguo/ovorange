@@ -9,10 +9,12 @@ cover:
   square: '../img/cc.jpg'
   twitter: '../img/cc.jpg'
   alt: 'cover'
-tags: [ "ts基础" ]
+tags: [ "TS基础" ]
 theme: 'dark'
 featured: true
 ---
+
+![封面|wide](/img/cc.jpg)[1]
 
 ## extends（继承）
 
@@ -40,7 +42,7 @@ class Uniqlo extends ClothingShop {
 
 
 ## implements（实现接口）
-想象商场制定的标准规范，每个店铺都必须遵守：ments
+想象商场制定的标准规范，每个店铺都必须遵守：
 
 ```javascript
 // 商场规定的标准
